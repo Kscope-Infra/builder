@@ -28,7 +28,7 @@ ENV BUILDKITE_AGENT_CONFIG=/buildkite/buildkite-agent.cfg
 
 RUN mkdir -p /buildkite/builds /buildkite/hooks /buildkite/plugins
 
-RUN curl -sLo /usr/local/bin/buildkite-agent https://download.buildkite.com/agent/stable/latest/buildkite-agent-linux-amd64
+RUN curl -sLo /usr/local/bin/buildkite-agent https://download.buildkite.com/agent/stable/latest/buildkite-agent-linux-amd64 && chmod +x /usr/local/bin/buildkite-agent
 
 COPY ./buildkite-agent.cfg /buildkite/buildkite-agent.cfg
 COPY ./entrypoint.sh /entrypoint.sh
