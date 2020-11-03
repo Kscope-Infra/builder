@@ -24,18 +24,18 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN curl -Lfs -o /sbin/tini  https://github.com/krallin/tini/releases/download/v0.18.0/tini \
     && chmod +x /sbin/tini
 
-ENV BUILDKITE_AGENT_CONFIG=/buildkite/buildkite-agent.cfg \
-    PATH="/usr/local/bin:${PATH}"
+ENV BUILDKITE_AGENT_CONFIG=/buildkite/buildkite-agent.cfg
 
 RUN mkdir -p /buildkite/builds /buildkite/hooks /buildkite/plugins
 
 RUN curl -sLo /usr/local/bin/buildkite-agent https://download.buildkite.com/agent/stable/latest/buildkite-agent-linux-amd64
 
 COPY ./buildkite-agent.cfg /buildkite/buildkite-agent.cfg
-COPY ./entrypoint.sh /usr/local/bin/buildkite-agent-entrypoint
+COPY ./entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 VOLUME /buildkite
-ENTRYPOINT ["buildkite-agent-entrypoint"]
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["start"]
 
 RUN apt-add-repository ppa:deadsnakes/ppa
