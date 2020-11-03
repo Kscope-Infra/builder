@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -euo pipefail
+
+eval "$(ssh-agent -s)"
+
+ssh-add -k /buildkite-secrets/*
