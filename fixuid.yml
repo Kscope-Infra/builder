@@ -1,0 +1,4 @@
+user: buildbot
+group: buildbot
+paths:
+  - /buildkite
