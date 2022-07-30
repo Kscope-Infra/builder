@@ -11,6 +11,8 @@ RUN apt install -y apt-transport-https bash bc bison bsdmainutils build-essentia
     python rsync schedtool squashfs-tools tini wget xdelta3 xsltproc yasm zip zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 100
+
 ###
 # Repo Setup
 ###
