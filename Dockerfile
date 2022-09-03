@@ -28,20 +28,20 @@ RUN curl -sLo /usr/local/bin/repo https://commondatastorage.googleapis.com/git-r
 RUN curl -Lfs -o /sbin/tini https://github.com/krallin/tini/releases/download/v0.19.0/tini \
     && chmod +x /sbin/tini
 
-ENV BUILDKITE_AGENT_CONFIG=/buildkite/buildkite-agent.cfg
-
-RUN mkdir -p /buildkite/builds /buildkite/hooks /buildkite/plugins
-
 RUN curl -sLo /usr/local/bin/buildkite-agent https://download.buildkite.com/agent/stable/latest/buildkite-agent-linux-amd64 \
     && chmod +x /usr/local/bin/buildkite-agent
 
-COPY ./buildkite-agent.cfg /buildkite/buildkite-agent.cfg
+COPY ./buildkite-agent.cfg /usr/local/etc/buildkite-agent.cfg
+ENV BUILDKITE_AGENT_CONFIG=/usr/local/etc/buildkite-agent.cfg
+
 COPY ./entrypoint.sh /usr/local/bin/buildkite-agent-entrypoint
 RUN chmod +x /usr/local/bin/buildkite-agent-entrypoint
 
 ###
 # User Setup
 ###
+
+RUN mkdir -p /buildkite
 
 RUN groupadd -g 1000 buildbot \
     && useradd -u 1000 -g 1000 -d /buildkite buildbot \
